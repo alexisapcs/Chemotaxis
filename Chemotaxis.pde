@@ -1,13 +1,16 @@
  //declare bacteria variables here   
- void setup()   
+ Ants[] Colony;
+void setup()   
  {     
- 	//initialize bacteria variables here   
+   //initialize bacteria variables here   
  }   
  void draw()   
  {    
- 	//move and show the bacteria   
+   //move and show the bacteria   
  }  
- class Bacteria    
+ class Ants    
  {     
- 	//lots of java!   
+   int myX, myY, myColor;
+   void move(){};
+   void show(){};   
  }    
