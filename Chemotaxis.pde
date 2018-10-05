@@ -1,13 +1,10 @@
 Bacteria[] dots;
-int mouseColor = color(121, 193, 240);
-boolean gameOver = false;
 
 void setup()   
 {     
   size(500, 500);
-  background(255);
-  //initialize bacteria variables here
-  dots = new Bacteria[100];
+  background(0);
+  dots = new Bacteria[10];
   for (int i = 0; i < dots.length; i++) {
     dots[i] = new Bacteria();
   }
@@ -15,44 +12,45 @@ void setup()
 
 void draw()   
 {    
-  background(255);
-
-  //move and show the bacteria
+  background(0);
+  bg();
   for (int i = 0; i < dots.length; i++) {
     dots[i].walk();
     dots[i].show();
   }
-
-  //food
-  fill(255, 98, 111);
-  ellipse(250, 250, 50, 50);
-  //mouse bacteria
-  fill(mouseColor);
-  ellipse(mouseX, mouseY, 50, 50);
-
-  //check if bacteria collided
-  for (int i = 0; i < dots.length; i++) {
-    dots[i].checkCollision();
-  }
+  hole();
 }  
 
 void mousePressed() {
-  for (int i = 0; i < dots.length; i++) {
-    dots[i].spawnAnt();
+  if (mouseY <= 300) {
+    for (int i = 0; i < dots.length; i++) {
+      dots[i] = new Bacteria();
+    }
   }
+}
+
+void bg() {
+  fill(247, 227, 178);
+  noStroke();
+  rect(0, 350, 500, 150);
+}
+
+void hole() {
+  fill(66, 48, 2);
+  noStroke();
+  ellipse(250, 360, 40, 20);
 }
 
 class Bacteria    
 {     
-  int myX;
-  int myY;
-  int myColor;
+  int myX, myY, myColor, myFollowColor;
   Bacteria() {
-    myX = (int)(Math.random()*500);
     spawnAnt();
-    //color of bacteria
-    myColor = color(192, 148, 232);
+    myX += (int)(Math.random()*100)-50;
+    myY += (int)(Math.random()*100)-50;
+    myColor = color((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
   }
+  
   void walk() {
     int xStep;
     int yStep;
@@ -62,7 +60,7 @@ class Bacteria
     {
       xStep = (int)(Math.random()*3 - 3);
     }
-    if (myY < 250) {
+    if (myY < 360) {
       yStep = (int)(Math.random()*3);
     } else 
     {
@@ -80,85 +78,23 @@ class Bacteria
     if (myY > 500) 
       myY = 500;
   }
+  
   void show() {
     fill(myColor);
-    stroke(2);
-    ellipse(myX, myY, 20, 20);
+    stroke(myColor);
+    ellipse(myX+10, myY-1, 10, 10);
+    ellipse(myX, myY, 10, 8);
+    ellipse(myX-10, myY, 12, 9);
+    line(myX-5, myY, myX-10, myY+8);
+    line(myX-5, myY, myX-10, myY-8);
+    line(myX, myY, myX-5, myY+8);
+    line(myX, myY, myX-5, myY-8);
+    line(myX+5, myY, myX, myY+8);
+    line(myX+5, myY, myX, myY-8);
   }
-  void checkCollision() {
-    //hit mouse circle
-    if (get(myX, myY) == mouseColor) {
-      spawnAnt();
-    }
-    //hit food
-    if (get(myX, myY) == color(255, 98, 111)) {
-      noLoop();
-      fill(0);
-      textSize(50);
-      textAlign(CENTER);
-      text("Game Over", 250, 225);
-      textSize(25);
-      text("Click to restart", 250, 275);
-      gameOver = true;
-    }
-  }
+  
   void spawnAnt() {
-    //get bacteria to come from either side of the screen (top, right, bottom, left)
     myX = mouseX;
     myY = mouseY;
   }
 }
-
-
-/*Ants[] colony;
-
-void setup() {     
-  size(500, 500);  
-  colony = new Ants[10];
-  for(int i = 0; i < colony.length; i++) {
-    colony[i] = new Ants();
-  }
-}   
-
-void draw() {
-  background(255);
-  for(int i = 0; i < colony.length; i++) {
-    colony[i].show();
-  }  
-}  
-
-void mousePressed() {
-  ant();
-}
-
-void ant() {
-  fill(0);
-  ellipse(mouseX+10, mouseY-1, 10, 10);
-  ellipse(mouseX, mouseY, 10, 8);
-  ellipse(mouseX-10, mouseY, 12, 9);
-  line(mouseX-5, mouseY, mouseX-10, mouseY+8);
-  line(mouseX-5, mouseY, mouseX-10, mouseY-8);
-  line(mouseX, mouseY, mouseX-5, mouseY+8);
-  line(mouseX, mouseY, mouseX-5, mouseY-8);
-  line(mouseX+5, mouseY, mouseX, mouseY+8);
-  line(mouseX+5, mouseY, mouseX, mouseY-8);
-}
-
-class Ants {     
-  int myX, myY, myColor;
-  void move() {
-  }
-  void show() {
-    fill(0);
-    stroke(0);
-    ellipse(mouseX+10, mouseY-1, 10, 10);
-    ellipse(mouseX, mouseY, 10, 8);
-    ellipse(mouseX-10, mouseY, 12, 9);
-    line(mouseX-5, mouseY, mouseX-10, mouseY+8);
-    line(mouseX-5, mouseY, mouseX-10, mouseY-8);
-    line(mouseX, mouseY, mouseX-5, mouseY+8);
-    line(mouseX, mouseY, mouseX-5, mouseY-8);
-    line(mouseX+5, mouseY, mouseX, mouseY+8);
-    line(mouseX+5, mouseY, mouseX, mouseY-8);
-  }  
-}    */
