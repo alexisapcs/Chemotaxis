@@ -3,7 +3,7 @@ Bacteria[] dots;
 void setup()   
 {     
   size(500, 500);
-  background(0);
+  background(color(#c4fdff));
   dots = new Bacteria[10];
   for (int i = 0; i < dots.length; i++) {
     dots[i] = new Bacteria();
@@ -12,7 +12,7 @@ void setup()
 
 void draw()   
 {    
-  background(0);
+  background(color(#c4fdff));
   bg();
   for (int i = 0; i < dots.length; i++) {
     dots[i].walk();
@@ -38,7 +38,7 @@ void bg() {
 void hole() {
   fill(66, 48, 2);
   noStroke();
-  ellipse(250, 360, 40, 20);
+  ellipse(250, 370, 45, 25);
 }
 
 class Bacteria    
@@ -48,7 +48,7 @@ class Bacteria
     spawnAnt();
     myX += (int)(Math.random()*100)-50;
     myY += (int)(Math.random()*100)-50;
-    myColor = color((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
+    myColor = color((int)(Math.random()*165)+90, 0, 0);
   }
   
   void walk() {
@@ -60,7 +60,7 @@ class Bacteria
     {
       xStep = (int)(Math.random()*3 - 3);
     }
-    if (myY < 360) {
+    if (myY < 370) {
       yStep = (int)(Math.random()*3);
     } else 
     {
